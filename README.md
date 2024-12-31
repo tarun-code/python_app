@@ -22,7 +22,7 @@ Before setting up the project, ensure you have the following:
 
 1. create your project directory:
 
-```bash
+```
 mkdir <project directory>
 
 ```
@@ -30,7 +30,7 @@ mkdir <project directory>
 
 2. Install the required Python libraries:
 
-```bash
+```
 pip install -r requirements.txt
 ```
 
@@ -48,7 +48,7 @@ botocore==1.29.9
 
 Create a `app.py` file with the following content:
 
-```python
+```
 from flask import Flask, jsonify
 import boto3
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError, ClientError
