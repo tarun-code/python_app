@@ -22,7 +22,7 @@ Before setting up the project, ensure you have the following:
 
 1. create your project directory:
 
-```
+```bash
 mkdir <project directory>
 
 ```
@@ -30,7 +30,7 @@ mkdir <project directory>
 
 2. Install the required Python libraries:
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 Create a `requirements.txt` file with the following content:
 
-```
+```bash
 Flask==2.2.3
 boto3==1.26.9
 botocore==1.29.9
@@ -48,7 +48,7 @@ botocore==1.29.9
 
 Create a `app.py` file with the following content:
 
-```
+```python
 from flask import Flask, jsonify
 import boto3
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError, ClientError
@@ -446,14 +446,14 @@ IAM User/Policy: An IAM user (s3User) is created with full access to the S3 buck
 2.5 Run Terraform to Apply Configuration
 Initialize Terraform:
 
-```
+```bash
 terraform init
 
 ```
 Apply the Terraform configuration:
 
 
-```
+```bash
 terraform apply
 
 ```
@@ -474,9 +474,9 @@ Test the app at `http://<ip>:5000`.
 
 ## References
 
--
+```
 
- Terraform Documentation: https://www.terraform.io/docs
+ -Terraform Documentation: https://www.terraform.io/docs
 - Flask Documentation: https://flask.palletsprojects.com/
 - AWS S3 Documentation: https://docs.aws.amazon.com/s3/index.html
 ```
