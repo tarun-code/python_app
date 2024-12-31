@@ -39,9 +39,12 @@ pip3 install flask boto3
 # (Optional) Install Git if you're pulling the app from GitHub
 yum install git -y
 
-# Clone your application repository if it is on GitHub (example)
-# git clone https://github.com/tarun-code/python_app.git /home/ec2-user/app
+cd /home/ec2-user/
+mkdir app
+cd app/
 
+# Clone your application repository if it is on GitHub (example)
+# git clone https://github.com/tarun-code/python_app.git 
 
 # Start the application using Flask (assuming app.py is in the specified location)
 nohup python3 /home/ec2-user/app.py &
