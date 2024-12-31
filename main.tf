@@ -28,16 +28,16 @@ resource "aws_instance" "app_server" {
   user_data = <<-EOF
  #!/bin/bash
 # Update the instance
-yum update -y
+ sudo yum update -y
 
 # Install Python 3 and pip
-yum install python3 -y
+sudo yum install python3 -y
 
 # Install Flask and Boto3 for Python
-pip3 install flask boto3
+sudo pip3 install flask boto3
 
 # (Optional) Install Git if you're pulling the app from GitHub
-yum install git -y
+sudo yum install git -y
 
 cd /home/ec2-user/
 mkdir app
