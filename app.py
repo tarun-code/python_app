@@ -28,6 +28,10 @@ def list_bucket_content(path):
             for obj in response['Contents']:
                 content.append(obj['Key'][len(path):].split('/')[0])  # Extract first-level dirs/files
 
+        # Handle case where no content is found for the given path
+        if not content:
+            return jsonify({"error": f"No content found for path '{path}'"}), 404
+
         return jsonify({"content": content}), 200
 
     except NoCredentialsError:
