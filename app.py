@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 import boto3
-from botocore.exceptions import NoCredentialsError, PartialCredentialsError
+from botocore.exceptions import NoCredentialsError, PartialCredentialsError, ClientError
 
 app = Flask(__name__)
 
@@ -23,6 +23,10 @@ def list_bucket_content(path):
         # List objects in the S3 bucket with the provided path prefix
         response = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix=path)
 
+        # Check if the S3 bucket exists
+        if 'Error' in response:
+            return jsonify({"error": "Bucket does not exist or there was an issue accessing it"}), 404
+
         content = []
         if 'Contents' in response:
             for obj in response['Contents']:
@@ -38,8 +42,17 @@ def list_bucket_content(path):
         return jsonify({"error": "AWS credentials are missing"}), 403
     except PartialCredentialsError:
         return jsonify({"error": "Incomplete AWS credentials"}), 403
+    except ClientError as e:
+        # This will catch errors like permission issues, bucket not found, etc.
+        error_code = e.response['Error']['Code']
+        if error_code == 'NoSuchBucket':
+            return jsonify({"error": f"Bucket '{BUCKET_NAME}' does not exist"}), 404
+        elif error_code == 'AccessDenied':
+            return jsonify({"error": "Access denied to the S3 bucket"}), 403
+        else:
+            return jsonify({"error": f"Client error: {str(e)}"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
