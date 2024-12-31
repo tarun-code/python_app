@@ -5,6 +5,82 @@
 
 This project is a Flask web application that interacts with an AWS S3 bucket to list the contents of files and directories. The app is integrated with Terraform to manage the AWS infrastructure, including VPC, subnets, S3 bucket, Internet Gateway (IGW), Security Groups, and IAM User/Policy. The application demonstrates error handling, AWS CLI configuration, and Terraform commands.
 
+
+## Project Overview
+### Objective:
+### Develop a Python Flask HTTP service that:
+
+Lists the contents of an S3 bucket.
+Allows interaction via HTTP GET requests.
+### Infrastructure:
+The service is deployed on an EC2 instance in AWS.
+Terraform is used to automate the deployment of the EC2 instance, security groups, and other AWS resources like VPC, IGW, subnets, route table, IAM, and key pairs.
+
+### Project Structure:
+## HTTP Service (app.py):
+
+A Flask application that exposes an endpoint /list-bucket-content to list the contents of a specified S3 bucket.
+It interacts with AWS S3 using the Boto3 library.
+## Terraform Infrastructure (main.tf):
+
+Terraform provisions an EC2 instance, a VPC, Internet Gateway (IGW), subnets, route table, IAM, security groups, and key pairs.
+Security groups are set up to allow HTTP traffic on port 80 and Flask application traffic on port 5000.
+Terraform Outputs:
+
+## Outputs the public IP address of the EC2 instance for accessing the service.
+### Design Decisions
+## Choice of HTTP Framework (Flask):
+
+Flask was chosen because it is a lightweight Python web framework ideal for building small services like this one.
+It is easy to set up, supports RESTful APIs, and integrates seamlessly with Boto3, making it easy to interact with AWS services like S3.
+## Choice of Infrastructure (EC2 + Security Groups):
+
+EC2 instance was selected over other services like AWS ECS for simplicity and cost-effectiveness, using a t2.micro instance that falls under the free-tier.
+Security Groups were configured to allow inbound HTTP traffic on port 80 and Flask’s port 5000, ensuring public access to the application but limiting external traffic to essential ports.
+## AWS S3 Interaction:
+
+Boto3, the official AWS SDK for Python, was used to interact with S3. The list_objects_v2 method is utilized to retrieve the contents of the S3 bucket.
+The application allows users to specify a path (prefix) to list objects under a given folder in the S3 bucket.
+## Terraform Configuration:
+
+Terraform is used to automate infrastructure provisioning, ensuring reproducibility and ease of deployment.
+The EC2 instance is provisioned with a user-data script that installs Python, Flask, and Boto3, and automatically runs the Flask application upon launch.
+Additionally, VPC, Internet Gateway (IGW), subnets, route table, IAM roles, and security groups are configured using Terraform.
+## Security:
+
+Security is managed by ensuring the EC2 instance only allows necessary traffic via security groups. Adding IAM roles for accessing S3 would improve security, rather than relying on manual credentials management.
+## Error Handling:
+
+The application handles various potential errors, such as missing credentials, S3 access issues, and general exceptions.
+Error responses are returned as JSON objects with appropriate status codes to assist in debugging.
+
+
+
+### Assumptions
+## AWS Credentials:
+
+AWS credentials are assumed to be configured in the local environment for both Terraform and Boto3 to interact with AWS services.
+You should configure AWS CLI or set environment variables for AWS access.
+## AMI Selection:
+
+The AMI ID (ami-0c55b159cbfafe1f0) used in the Terraform script is for an Amazon Linux 2 instance in the us-east-1 region. This ID may need to be changed depending on the AWS region you deploy in.
+## Security Groups:
+
+The security group configuration opens ports 80 (HTTP) and 5000 (Flask app) to the public (0.0.0.0/0), suitable for development and testing purposes. For production environments, it is recommended to restrict access to specific IPs.
+
+### Challenges Faced
+## S3 Permissions:
+
+One challenge was ensuring that the EC2 instance had the proper IAM role and permissions to interact with S3. setting up IAM roles is critical for better security.
+### Security Groups and Network Configuration:
+
+Managing the right security group settings for inbound and outbound traffic was key. By default, AWS blocks all inbound traffic, so configuring rules to allow HTTP and Flask ports was necessary.
+For more secure deployments, a VPC (Virtual Private Cloud) with private subnets could be set up, especially if you’re handling sensitive data.
+
+
+### Getting Started
+
+
 ## Prerequisites
 
 Before setting up the project, ensure you have the following:
@@ -16,9 +92,12 @@ Before setting up the project, ensure you have the following:
 - **AWS CLI** configured with your credentials
 - **pip** for managing Python dependencies
 
+
+
+
 ## Step 1: Flask Application Development
 
-### 1.1 Install Python Dependencies
+## 1.1 Install Python Dependencies
 
 1. create your project directory:
 
@@ -442,6 +521,13 @@ Internet Gateway: This allows communication between the VPC and the internet.
 Security Group: The security group allows all inbound and outbound traffic for testing purposes.
 
 IAM User/Policy: An IAM user (s3User) is created with full access to the S3 bucket, which is necessary for accessing the bucket from the Flask app.
+
+Key Pair: A key pair is used for secure SSH access to the EC2 instance.
+
+Route Table: A Route Table is configured to route traffic between subnets and the internet.
+
+
+EC2 Instance: The EC2 instance is provisioned with a user-data script to install the necessary dependencies (Python, Flask, Boto3) and run the Flask app.
 
 2.5 Run Terraform to Apply Configuration
 Initialize Terraform:
