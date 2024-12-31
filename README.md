@@ -81,7 +81,7 @@ For more secure deployments, a VPC (Virtual Private Cloud) with private subnets 
 ### Getting Started
 
 
-## Prerequisites
+## `Prerequisites`
 
 Before setting up the project, ensure you have the following:
 
