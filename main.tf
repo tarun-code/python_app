@@ -28,6 +28,8 @@ resource "aws_instance" "app_server" {
   user_data = <<-EOF
  #!/bin/bash
 # Update the instance
+
+ sudo su 
  sudo yum update -y
 
 # Install Python 3 and pip
