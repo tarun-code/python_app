@@ -72,8 +72,8 @@ resource "aws_security_group" "my_security_group" {
 
   # Allow Flask App (port 5000)
   ingress {
-    from_port   = 5000
-    to_port     = 5000
+    from_port   = 8000
+    to_port     = 8000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -207,7 +207,7 @@ resource "aws_instance" "app_server" {
     if ! pgrep -f "python3 app.py" > /dev/null
     then
         nohup python3 app.py &
-        echo "Flask app started on port 5000."
+        echo "Flask app started on port 8000."
     else
         echo "Flask app already running."
     fi
