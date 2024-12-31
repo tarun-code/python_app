@@ -481,4 +481,4 @@ Test the app at `http://<ip>:5000`.
 - AWS S3 Documentation: https://docs.aws.amazon.com/s3/index.html
 ```
 
-This `README.md` file includes a step-by-step guide on setting up the application, configuring Terraform, and running the app with error handling and AWS integration. The references are provided in text format at the end.
+This `README.md` file includes a step-by-step guide on setting up the application, configuring Terraform, and running the app with error handling and AWS integration. The references are provided .
