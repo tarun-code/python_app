@@ -85,12 +85,12 @@ For more secure deployments, a VPC (Virtual Private Cloud) with private subnets 
 
 Before setting up the project, ensure you have the following:
 
-- **Python 3.7+**
-- **Terraform** installed
-- **AWS Account** with access to manage resources
-- **Flask** and **boto3** libraries installed
-- **AWS CLI** configured with your credentials
-- **pip** for managing Python dependencies
+- Python 3.7+
+- Terraform installed
+- AWS Account with access to manage resources
+- Flask and boto3 libraries installed
+- AWS CLI configured with your credentials
+- pip for managing Python dependencies
 
 
 
