@@ -8,7 +8,7 @@ app = Flask(__name__)
 s3 = boto3.client('s3')
 
 # Specify your S3 bucket name
-BUCKET_NAME = 'your-bucket-name'  # Replace with your actual bucket name
+BUCKET_NAME = 'python-app-terraform'  # Replace with your actual bucket name
 
 @app.route('/list-bucket-content', defaults={'path': ''})
 @app.route('/list-bucket-content/<path:path>', methods=['GET'])
