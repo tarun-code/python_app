@@ -44,7 +44,7 @@ mkdir app
 cd app/
 
 # Clone your application repository if it is on GitHub (example)
-# git clone https://github.com/tarun-code/python_app.git 
+ git clone https://github.com/tarun-code/python_app.git 
 
 # Start the application using Flask (assuming app.py is in the specified location)
 nohup python3 /home/ec2-user/app.py &
