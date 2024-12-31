@@ -29,7 +29,7 @@ resource "aws_instance" "app_server" {
  #!/bin/bash
 # Update the instance
 
- sudo su 
+ # sudo su 
  sudo yum update -y
 
 # Install Python 3 and pip
