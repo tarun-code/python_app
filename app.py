@@ -10,18 +10,23 @@ s3 = boto3.client('s3')
 # Specify your S3 bucket name
 BUCKET_NAME = 'python-app-terraform'  # Replace with your actual bucket name
 
-@app.route('/list-bucket-content', defaults={'path': ''})
+@app.route('/')
+def home():
+    return "Welcome to the S3 Bucket Content Viewer!"
+
+@app.route('/list-bucket-content/', defaults={'path': ''})
 @app.route('/list-bucket-content/<path:path>', methods=['GET'])
 def list_bucket_content(path):
+    path = path.strip('/')  # Normalize path to remove leading/trailing slashes
+
     try:
-        # List the objects in the bucket
-        objects = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix=path)
-        
-        # Extract the file and directory names
+        # List objects in the S3 bucket with the provided path prefix
+        response = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix=path)
+
         content = []
-        if 'Contents' in objects:
-            for obj in objects['Contents']:
-                content.append(obj['Key'][len(path):].split('/')[0])  # Extracting first-level directories/files
+        if 'Contents' in response:
+            for obj in response['Contents']:
+                content.append(obj['Key'][len(path):].split('/')[0])  # Extract first-level dirs/files
 
         return jsonify({"content": content}), 200
 
