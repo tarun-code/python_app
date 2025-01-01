@@ -202,9 +202,8 @@ resource "aws_instance" "app_server" {
     # Change to app directory and start Flask application
     cd /home/ec2-user/app/python_app
     sleep 120
-    # Create a systemd service for Flask
-
   
+
     if ! pgrep -f "python3 app.py" > /dev/null
     then
         nohup python3 app.py &
