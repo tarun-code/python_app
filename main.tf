@@ -17,6 +17,7 @@ resource "aws_vpc" "my_vpc" {
 resource "aws_subnet" "my_subnet" {
   vpc_id                  = aws_vpc.my_vpc.id
   cidr_block              = "10.0.1.0/24"
+  availability_zone       = "ap-south-1a" # Change to a supported zone
   map_public_ip_on_launch = true # Enable public IP assignment for instances
   tags = {
     Name = "MySubnet"
@@ -165,7 +166,7 @@ resource "aws_instance" "app_server" {
   vpc_security_group_ids = [aws_security_group.my_security_group.id]
 
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
-
+  # availability_zone = "ap-south-1a"
   associate_public_ip_address = true
 
   user_data = <<-EOF
